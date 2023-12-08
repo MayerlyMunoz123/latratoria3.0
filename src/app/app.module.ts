@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { MaskDirective } from './directives/mask.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -9,13 +9,15 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { AmbientesComponent } from './ambientes/ambientes/ambientes/ambientes.component';
 import { RouterModule } from '@angular/router';
-import { FormularioComponent } from './auth/formulario/formulario.component';
-import { Formulario2Component } from './auth/formulario2/formulario2.component';
 import { Ambiente1Module} from './ambientes/ambiente1/ambiente1.module';
 import { Ambiente2Module } from './ambientes/ambiente2/ambiente2.module';
 import { Ambiente3Module } from './ambientes/ambiente3/ambiente3.module';
 import { DeleteComponent } from './auth/delete/delete.component';
 import { UpdateComponent } from './auth/update/update.component';
+import { FormularioPagoComponent } from './auth/formulario-pago/formulario-pago.component';
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
+import { Authservice } from './auth/auth.service';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 
 
@@ -27,18 +29,20 @@ import { UpdateComponent } from './auth/update/update.component';
     AmbientesComponent,
     NavbarComponent,
     FooterComponent,
-    FormularioComponent,
-    Formulario2Component,
     DeleteComponent,
-    UpdateComponent
-
+    UpdateComponent,
+    FormularioPagoComponent,
+    MaskDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     Ambiente1Module,
     Ambiente2Module,
-    Ambiente3Module
+    Ambiente3Module,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   exports: [
     AppComponent,
@@ -48,9 +52,13 @@ import { UpdateComponent } from './auth/update/update.component';
     NavbarComponent,
     FooterComponent,
     RouterModule,
-
+    FormularioPagoComponent
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withFetch())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

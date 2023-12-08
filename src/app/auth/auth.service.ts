@@ -1,17 +1,45 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class Authservice {
+  private apiUrl = 'http://127.0.0.1:5000/app';
 
-  private apiUrl = 'http://your-api-url'; // Replace with your API endpoint
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  realizarPago(data: any) {
+    const payload = data;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
 
-  saveReservation(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reservations`, data);
+    return this.http.post(`${this.apiUrl}/insertar/pagos`, payload, { headers });
+  }
+
+
+  obtenerPago(id:Number): Observable<any> {
+  return this.http.get(`${this.apiUrl}/ver/pagos/${id}`);
+}
+
+
+  obtenerPagos(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/ver/pagos/`);
+}
+
+  eliminarPago(id:Number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/${id}`);
+}
+
+  actualizarPago(id:String, data: any) {
+    return this.procesarPeticion('put', `${this.apiUrl}/actualizar/pagos/${id}`, data);
+}
+
+procesarPeticion(method: string, url: string, data = {}){
+
+
   }
 }
